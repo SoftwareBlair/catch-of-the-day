@@ -2,10 +2,6 @@ import React from 'react';
 import { getFunName } from '../helpers';
 
 class StorePicker extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.goToStore = this.goToStore.bind(this);
-  // }
 
   goToStore(event) {
     event.preventDefault();
@@ -13,7 +9,8 @@ class StorePicker extends React.Component {
 
     console.log(`Going to ${storeID}`);
     this.context.router.transitionTo(`/store/${storeID}`);
-  }
+
+  };
 
   render() {
     return (
@@ -23,11 +20,13 @@ class StorePicker extends React.Component {
         <button type="submit">Visit Store ➡</button>
       </form>
     );
-  }
-}
+
+  };
+
+};
 
 StorePicker.contextTypes = {
   router: React.PropTypes.object
-}
+};
 
 export default StorePicker;

@@ -9,6 +9,7 @@ import StorePicker from './components/StorePicker';
 import NotFound from './components/NotFound';
 
 const Route = () => {
+
   return (
     <BrowserRouter>
       <div>
@@ -18,6 +19,7 @@ const Route = () => {
       </div>
     </BrowserRouter>
   );
-}
+
+};
 
 render(<Route/>, document.querySelector('#main'));
