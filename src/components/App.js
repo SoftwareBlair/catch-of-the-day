@@ -48,7 +48,6 @@ class App extends React.Component {
   };
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('Something Changed');
     localStorage.setItem(`order-${this.props.params.storeID}`, JSON.stringify(nextState.order));
   };
 
@@ -99,9 +98,7 @@ class App extends React.Component {
   removeFromOrder(key) {
     const order = {...this.state.order};
 
-    if (order[key] > 1) {
-      order[key]--;
-    }
+    if (order[key] > 1) order[key]--;
     else {
       delete order[key];
     }
@@ -132,11 +129,11 @@ class App extends React.Component {
             fishes={ this.state.fishes }
             order={ this.state.order }
             params={ this.props.params }
-            removeFromOrder= { this.removeFromOrder }
+            removeFromOrder={ this.removeFromOrder }
           />
           <Inventory
             addFish={ this.addFish }
-            removeFish= { this.removeFish }
+            removeFish={ this.removeFish }
             loadSamples={ this.loadSamples }
             fishes={ this.state.fishes }
             updateFish={ this.updateFish }

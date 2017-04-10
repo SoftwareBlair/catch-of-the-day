@@ -16,7 +16,9 @@ class Order extends React.Component {
     const removeButton = <button onClick={ () => this.props.removeFromOrder(key) }>&times;</button>
 
     if (!fish || fish.status === 'unavailable') {
-      return <li key={ key }>Sorry, { fish ? fish.name : 'fish' } is no longer available! { removeButton }</li>
+      return (
+        <li key={ key }>Sorry, { fish ? fish.name : 'fish' } is no longer available! { removeButton }</li>
+      );
     };
 
     return (
