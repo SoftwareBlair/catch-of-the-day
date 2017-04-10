@@ -12,11 +12,11 @@ const Route = () => {
 
   return (
     <BrowserRouter>
-      <div>
-        <Match exactly pattern="/" component={StorePicker} />
-        <Match pattern="/store/:storeID" component={App} />
-        <Miss component={NotFound} />
-      </div>
+        <div>
+            <Match exactly pattern="/" component={StorePicker} />
+            <Match pattern="/store/:storeID" component={App} />
+            <Miss component={NotFound} />
+        </div>
     </BrowserRouter>
   );
 
