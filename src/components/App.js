@@ -39,7 +39,7 @@ class App extends React.Component {
       this.setState({
         order: JSON.parse(localStorageRef)
       });
-    }
+    };
 
   };
 
@@ -97,10 +97,15 @@ class App extends React.Component {
 
   removeFromOrder(key) {
     const order = {...this.state.order};
+    const fishes = {...this.state.fishes};
 
-    if (order[key] > 1) order[key]--;
-    else {
+    const fishStatus = fishes[key].status;
+
+    if (fishStatus === 'unavailable' || order[key] === 1) {
       delete order[key];
+    }
+    else {
+      order[key]--;
     }
 
     this.setState({ order });
