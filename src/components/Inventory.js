@@ -9,6 +9,13 @@ class Inventory extends React.Component {
 
     this.renderInventory = this.renderInventory.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.renderLogin = this.renderLogin.bind(this);
+    this.authenticate = this.authenticate.bind(this);
+
+    this.state = {
+      uid: null,
+      owner: null
+    };
 
   };
 
@@ -24,11 +31,17 @@ class Inventory extends React.Component {
 
   };
 
+  authenticate(provider) {
+
+  };
+
   renderLogin() {
     return (
       <nav className="login">
         <h2>Inventory</h2>
+        <p>Sign in to manage your store's inventory</p>
         <button className="github" onClick={ () => this.authenticate('github') }>Login With Github</button>
+        <button className="facebook" onClick={ () => this.authenticate('facebook') }>Login With Facebook</button>
         <button className="twitter" onClick={ () => this.authenticate('twitter') }>Login With Twitter</button>
       </nav>
     );
@@ -54,9 +67,25 @@ class Inventory extends React.Component {
   };
 
   render() {
+    const logout = <button>Log Out</button>
+
+    if (!this.state.uid) {
+      return <div>{ this.renderLogin() }</div>;
+    };
+
+    if (this.state.uid !== this.state.owner) {
+      return (
+        <div>
+          <p>Sorry, you are not the owner of this store!</p>
+          { logout }
+        </div>
+      );
+    };
+
     return (
       <div>
           <h2>Inventory</h2>
+          { logout }
           { Object
             .keys(this.props.fishes)
             .map(this.renderInventory)
