@@ -1,4 +1,5 @@
 import React from 'react';
+import base from '../base';
 
 import AddFishForm from './AddFishForm';
 
@@ -11,12 +12,23 @@ class Inventory extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.renderLogin = this.renderLogin.bind(this);
     this.authenticate = this.authenticate.bind(this);
+    this.authHandler = this.authHandler.bind(this);
+    this.logout = this.logout.bind(this);
 
     this.state = {
       uid: null,
       owner: null
     };
 
+  };
+
+  componentDidMount() {
+    base.onAuth(user => {
+      if (user) {
+        this.authHandler(null, { user });
+      };
+
+    });
   };
 
   handleChange(e, key) {
@@ -32,6 +44,43 @@ class Inventory extends React.Component {
   };
 
   authenticate(provider) {
+    console.log(`Loging in with ${provider}`);
+    base.authWithOAuthPopup(provider, this.authHandler);
+  };
+
+  logout() {
+    base.unauth();
+
+    this.setState({
+      uid : null
+    });
+
+  };
+
+  authHandler(err, authData) {
+
+    if (err) {
+      console.error(err);
+      return;
+    };
+
+    const storeRef = base.database().ref(this.props.storeID);
+
+    storeRef.once('value', (snapshot) => {
+      const data = snapshot.val() || {};
+
+      if (!data.owner) {
+        storeRef.set({
+          owner: authData.user.uid
+        });
+      };
+
+      this.setState({
+        uid: authData.user.uid,
+        owner: data.owner || authData.user.uid
+      });
+
+    });
 
   };
 
@@ -67,7 +116,7 @@ class Inventory extends React.Component {
   };
 
   render() {
-    const logout = <button>Log Out</button>
+    const logout = <button onClick={ this.logout }>Log Out</button>
 
     if (!this.state.uid) {
       return <div>{ this.renderLogin() }</div>;
@@ -104,7 +153,8 @@ Inventory.propTypes = {
   updateFish: React.PropTypes.func.isRequired,
   removeFish: React.PropTypes.func.isRequired,
   addFish: React.PropTypes.func.isRequired,
-  loadSamples: React.PropTypes.func.isRequired
+  loadSamples: React.PropTypes.func.isRequired,
+  storeID: React.PropTypes.string.isRequired
 };
 
 export default Inventory;
