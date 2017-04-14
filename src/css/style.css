@@ -46,8 +46,8 @@
           transform: translateY(0);
 }
 .count-leave.count-leave-active {
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
 }
 @font-face {
   font-family: "haymakerregular";
