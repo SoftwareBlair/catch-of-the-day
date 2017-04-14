@@ -2,4 +2,4 @@ node_modules/
 *.zip
 .DS_Store
 .idea
-./src/base.js
+src/base.js
